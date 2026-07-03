@@ -1,0 +1,181 @@
+aid: signeasy
+url: https://raw.githubusercontent.com/api-evangelist/signeasy/refs/heads/main/apis.yml
+name: Signeasy
+kind: company
+description: Signeasy is an eSignature and intelligent contract management platform
+  used by tens of thousands of businesses to sign, send, and manage documents. The
+  Signeasy API (v3) is a RESTful eSignature API that lets developers send documents
+  for signature (envelopes), embed signing and sending flows directly inside their
+  own web and mobile apps via iframes, manage reusable templates with merge fields,
+  upload original documents, and receive real-time signature lifecycle notifications
+  through webhooks. All endpoints are served from https://api.signeasy.com/v3 and
+  authenticated with OAuth 2.0 Bearer access tokens (sandbox and live).
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- eSignature
+- Electronic Signature
+- Documents
+- Contract Management
+- Embedded Signing
+- Templates
+- Webhooks
+created: '2026-07-03'
+modified: '2026-07-03'
+specificationVersion: '0.19'
+apis:
+- aid: signeasy:signeasy-envelopes-api
+  name: Signeasy Envelopes API
+  tags:
+  - Envelopes
+  - Signature Requests
+  - eSignature
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.signeasy.com/reference/create-an-envelope-rs-originals-templates
+  baseURL: https://api.signeasy.com/v3
+  properties:
+  - url: https://docs.signeasy.com/docs/envelopes
+    type: Documentation
+  - url: https://docs.signeasy.com/reference/create-an-envelope-rs-originals-templates
+    type: APIReference
+  - url: openapi/signeasy-openapi.yml
+    type: OpenAPI
+  - url: collections/signeasy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/signeasy.opencollection.json
+    type: OpenCollection
+  description: Create and send envelopes - signature requests composed of one or many
+    original documents and templates, sent to up to 45 signers. Retrieve the envelope
+    (pending file) object and its status, download the signed PDF, and cancel or void
+    a signature request.
+- aid: signeasy:signeasy-originals-api
+  name: Signeasy Originals API
+  tags:
+  - Documents
+  - Originals
+  - Upload
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.signeasy.com/reference/create-an-original-document
+  baseURL: https://api.signeasy.com/v3
+  properties:
+  - url: https://docs.signeasy.com/docs/original-documents-imports
+    type: Documentation
+  - url: https://docs.signeasy.com/reference/create-an-original-document
+    type: APIReference
+  - url: openapi/signeasy-openapi.yml
+    type: OpenAPI
+  - url: collections/signeasy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/signeasy.opencollection.json
+    type: OpenCollection
+  description: Upload original (master) documents that can be reused to send out signature
+    requests. Originals are the raw source files that envelopes and templates are built
+    from.
+- aid: signeasy:signeasy-templates-api
+  name: Signeasy Templates API
+  tags:
+  - Templates
+  - Merge Fields
+  - Automation
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.signeasy.com/reference/fetch-embedded-template-create-url
+  baseURL: https://api.signeasy.com/v3
+  properties:
+  - url: https://docs.signeasy.com/docs/templates
+    type: Documentation
+  - url: https://docs.signeasy.com/reference/fetch-embedded-template-create-url
+    type: APIReference
+  - url: openapi/signeasy-openapi.yml
+    type: OpenAPI
+  - url: collections/signeasy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/signeasy.opencollection.json
+    type: OpenCollection
+  description: Manage reusable templates - documents with predefined roles and merge
+    fields that automate signature requests. Update a template and fetch an embedded
+    template-creation URL so users can build or edit templates inside your own app in
+    an iframe.
+- aid: signeasy:signeasy-embedded-signing-api
+  name: Signeasy Embedded Signing API
+  tags:
+  - Embedded Signing
+  - Embedded Sending
+  - iFrame
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.signeasy.com/docs/embedded-signing
+  baseURL: https://api.signeasy.com/v3
+  properties:
+  - url: https://docs.signeasy.com/docs/embedded-signing
+    type: Documentation
+  - url: https://docs.signeasy.com/reference/fetch-rs-sending-url
+    type: APIReference
+  - url: openapi/signeasy-openapi.yml
+    type: OpenAPI
+  - url: collections/signeasy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/signeasy.opencollection.json
+    type: OpenCollection
+  description: Embed signing and sending directly in your web or mobile app. Create
+    embedded signature requests (no Signeasy emails sent), generate per-recipient
+    signing URLs to load in an iframe or pop-up, fetch an embedded sending URL to
+    prepare and send documents, and cancel embedded signature requests.
+- aid: signeasy:signeasy-webhooks-api
+  name: Signeasy Webhooks API
+  tags:
+  - Webhooks
+  - Events
+  - Notifications
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.signeasy.com/docs/webhooks
+  baseURL: https://api.signeasy.com/v3
+  properties:
+  - url: https://docs.signeasy.com/docs/webhooks
+    type: Documentation
+  - url: https://docs.signeasy.com/docs/webhooks
+    type: APIReference
+  - url: openapi/signeasy-openapi.yml
+    type: OpenAPI
+  description: Subscribe an HTTP endpoint to signature-request lifecycle events -
+    rs.initiated, rs.link_sent, rs.viewed, rs.signed, rs.completed, rs.declined,
+    rs.reminded, rs.expired, rs.voided, and document.signed. Signeasy POSTs an
+    asynchronous payload (with event_user and metadata token) to your URL, retrying
+    failures with exponential backoff over 24 hours. Subscriptions are configured in
+    the developer portal.
+- aid: signeasy:signeasy-users-api
+  name: Signeasy Users API
+  tags:
+  - Users
+  - Account
+  - Credits
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.signeasy.com/reference/fetch-user-details
+  baseURL: https://api.signeasy.com/v3
+  properties:
+  - url: https://docs.signeasy.com/reference/fetch-user-details
+    type: APIReference
+  - url: openapi/signeasy-openapi.yml
+    type: OpenAPI
+  - url: collections/signeasy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/signeasy.opencollection.json
+    type: OpenCollection
+  description: Fetch the authenticated user's details via GET /me/, including account
+    information and remaining envelope credits used to gauge available signature
+    request volume.
+common:
+- type: GitHubOrganization
+  url: https://github.com/signeasy
+- type: LinkedIn
+  url: https://www.linkedin.com/company/signeasy
+- type: Website
+  url: https://signeasy.com/
+- type: Documentation
+  url: https://docs.signeasy.com/
+- type: Plans
+  url: plans/signeasy-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/signeasy-rate-limits.yml
+- type: FinOps
+  url: finops/signeasy-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

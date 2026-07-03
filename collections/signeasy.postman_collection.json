@@ -1,0 +1,157 @@
+{
+  "info": {
+    "name": "Signeasy API v3",
+    "description": "RESTful eSignature API (v3) for Signeasy. Send envelopes (signature requests), embed signing and sending in your own app via iframes, manage templates and originals, fetch the authenticated user, and receive webhook events. Base URL: https://api.signeasy.com/v3. All requests require an OAuth 2.0 Bearer access token (sandbox or live). Endpoints marked (modeled) are inferred from the guides where the public reference does not embed a machine-readable definition.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{accessToken}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.signeasy.com/v3", "type": "string" },
+    { "key": "accessToken", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Envelopes",
+      "item": [
+        {
+          "name": "Create or send an envelope",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"originals\": [],\n  \"templates\": [],\n  \"recipients\": [],\n  \"embedded_signing\": true\n}" },
+            "url": { "raw": "{{baseUrl}}/rs/envelope/", "host": ["{{baseUrl}}"], "path": ["rs", "envelope", ""] },
+            "description": "Send a signature request with one or more original documents and/or templates to up to 45 signers."
+          }
+        },
+        {
+          "name": "Retrieve the envelope object (modeled)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/rs/envelope/:pending_file_id", "host": ["{{baseUrl}}"], "path": ["rs", "envelope", ":pending_file_id"], "variable": [{ "key": "pending_file_id", "value": "" }] },
+            "description": "Fetch a signature request (pending file) and its status. Path modeled from the envelope object documentation."
+          }
+        },
+        {
+          "name": "Cancel (void) an envelope",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/rs/envelope/:pending_file_id/cancel", "host": ["{{baseUrl}}"], "path": ["rs", "envelope", ":pending_file_id", "cancel"], "variable": [{ "key": "pending_file_id", "value": "" }] },
+            "description": "Cancel or void an envelope signature request."
+          }
+        },
+        {
+          "name": "Cancel a signature request",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/rs/:rs_id/cancel", "host": ["{{baseUrl}}"], "path": ["rs", ":rs_id", "cancel"], "variable": [{ "key": "rs_id", "value": "" }] },
+            "description": "Cancel a signature request by its request id."
+          }
+        },
+        {
+          "name": "Download a signed file as PDF",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/rs/envelope/signed/:signed_id/:source_id/download", "host": ["{{baseUrl}}"], "path": ["rs", "envelope", "signed", ":signed_id", ":source_id", "download"], "variable": [{ "key": "signed_id", "value": "" }, { "key": "source_id", "value": "" }] },
+            "description": "Download a signed document within an envelope as a PDF."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Originals",
+      "item": [
+        {
+          "name": "Upload an original",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": { "mode": "formdata", "formdata": [{ "key": "file", "type": "file", "src": [] }] },
+            "url": { "raw": "{{baseUrl}}/original/", "host": ["{{baseUrl}}"], "path": ["original", ""] },
+            "description": "Upload a master document (up to 40 MB) to reuse for signature requests."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Templates",
+      "item": [
+        {
+          "name": "Update template",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": { "raw": "{{baseUrl}}/template/:template_id", "host": ["{{baseUrl}}"], "path": ["template", ":template_id"], "variable": [{ "key": "template_id", "value": "" }] },
+            "description": "Update an existing template."
+          }
+        },
+        {
+          "name": "Fetch embedded template create URL",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/template/:template_id/embed", "host": ["{{baseUrl}}"], "path": ["template", ":template_id", "embed"], "variable": [{ "key": "template_id", "value": "" }] },
+            "description": "Get an embedded URL to create or edit templates inside your app in an iframe."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Embedded",
+      "item": [
+        {
+          "name": "Fetch embedded sending URL",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": { "raw": "{{baseUrl}}/rs/embedded/url/", "host": ["{{baseUrl}}"], "path": ["rs", "embedded", "url", ""] },
+            "description": "Return a URL to prepare and send a document for signature from within your app."
+          }
+        },
+        {
+          "name": "Fetch embedded signing URL for recipient (modeled)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"pending_file_id\": 0,\n  \"email\": \"\",\n  \"redirect_url\": \"\"\n}" },
+            "url": { "raw": "{{baseUrl}}/rs/embedded/signing_url/", "host": ["{{baseUrl}}"], "path": ["rs", "embedded", "signing_url", ""] },
+            "description": "Generate a per-recipient signing URL for an embedded request. Path modeled from the embedded signing guide."
+          }
+        },
+        {
+          "name": "Cancel an embedded signature request",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/rs/embedded/:pending_file_id/cancel/", "host": ["{{baseUrl}}"], "path": ["rs", "embedded", ":pending_file_id", "cancel", ""], "variable": [{ "key": "pending_file_id", "value": "" }] },
+            "description": "Cancel an embedded signature request."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Fetch user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/me/", "host": ["{{baseUrl}}"], "path": ["me", ""] },
+            "description": "Fetch the authenticated user's details, including remaining envelope credits."
+          }
+        }
+      ]
+    }
+  ]
+}

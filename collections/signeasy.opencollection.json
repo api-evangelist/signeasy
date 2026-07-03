@@ -1,0 +1,163 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Signeasy API v3",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{accessToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Envelopes", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create or send an envelope.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/rs/envelope/",
+            "body": { "type": "json", "data": "{\"originals\":[],\"templates\":[],\"recipients\":[],\"embedded_signing\":true}" }
+          },
+          "docs": "Send a signature request with one or more originals and/or templates to up to 45 signers."
+        },
+        {
+          "info": { "name": "Retrieve the envelope object (modeled).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.signeasy.com/v3/rs/envelope/:pending_file_id",
+            "params": [
+              { "name": "pending_file_id", "value": "", "type": "path", "description": "The pending file (envelope) id." }
+            ]
+          },
+          "docs": "Fetch a signature request and its status. Path modeled from the envelope object documentation."
+        },
+        {
+          "info": { "name": "Cancel (void) an envelope.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/rs/envelope/:pending_file_id/cancel",
+            "params": [
+              { "name": "pending_file_id", "value": "", "type": "path", "description": "The pending file (envelope) id." }
+            ]
+          },
+          "docs": "Cancel or void an envelope signature request."
+        },
+        {
+          "info": { "name": "Cancel a signature request.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/rs/:rs_id/cancel",
+            "params": [
+              { "name": "rs_id", "value": "", "type": "path", "description": "The signature request id." }
+            ]
+          },
+          "docs": "Cancel a signature request by its request id."
+        },
+        {
+          "info": { "name": "Download a signed file as PDF.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.signeasy.com/v3/rs/envelope/signed/:signed_id/:source_id/download",
+            "params": [
+              { "name": "signed_id", "value": "", "type": "path", "description": "The signed envelope id." },
+              { "name": "source_id", "value": "", "type": "path", "description": "The source document id." }
+            ]
+          },
+          "docs": "Download a signed document within an envelope as a PDF."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Originals", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Upload an original.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/original/",
+            "body": { "type": "multipart", "data": "" }
+          },
+          "docs": "Upload a master document (up to 40 MB) to reuse for signature requests."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Templates", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Update template.", "type": "http" },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.signeasy.com/v3/template/:template_id",
+            "params": [
+              { "name": "template_id", "value": "", "type": "path", "description": "The template id." }
+            ],
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Update an existing template."
+        },
+        {
+          "info": { "name": "Fetch embedded template create URL.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/template/:template_id/embed",
+            "params": [
+              { "name": "template_id", "value": "", "type": "path", "description": "The template id." }
+            ]
+          },
+          "docs": "Get an embedded URL to create or edit templates inside your app in an iframe."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Embedded", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Fetch embedded sending URL.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/rs/embedded/url/",
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Return a URL to prepare and send a document for signature from within your app."
+        },
+        {
+          "info": { "name": "Fetch embedded signing URL for recipient (modeled).", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/rs/embedded/signing_url/",
+            "body": { "type": "json", "data": "{\"pending_file_id\":0,\"email\":\"\",\"redirect_url\":\"\"}" }
+          },
+          "docs": "Generate a per-recipient signing URL for an embedded request. Path modeled from the embedded signing guide."
+        },
+        {
+          "info": { "name": "Cancel an embedded signature request.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/rs/embedded/:pending_file_id/cancel/",
+            "params": [
+              { "name": "pending_file_id", "value": "", "type": "path", "description": "The pending file (envelope) id." }
+            ]
+          },
+          "docs": "Cancel an embedded signature request."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Users", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Fetch user.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.signeasy.com/v3/me/"
+          },
+          "docs": "Fetch the authenticated user's details, including remaining envelope credits."
+        }
+      ]
+    }
+  ]
+}

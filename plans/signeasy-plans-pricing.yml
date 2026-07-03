@@ -1,0 +1,153 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Signeasy
+providerId: signeasy
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- eSignature
+- Documents
+- Contract Management
+- Plans
+description: >-
+  The Signeasy API is priced in tiers on the eSignature API pricing page,
+  metered primarily by the number of legally binding eSignature requests
+  (envelopes) per month. A free Starter (sandbox) tier lets developers evaluate
+  the full API; paid Intermediate and Advanced tiers add features (templates,
+  embedded signing/sending, webhooks, embedded template creation) and higher
+  volumes; and a custom Enterprise ("Build Your Plan") tier covers high-volume
+  and specialized needs. An envelope counts as one signature request regardless
+  of how many documents, fields, or signers it contains (up to 45 signers, 40 MB
+  per document). Prices below were captured from the public pricing page and
+  should be re-verified during reconciliation.
+notes: >-
+  Reported overage: high-volume API usage above ~10,000 envelopes/month may
+  incur overage fees (~$0.10 per envelope), and custom API access may add an
+  annual per-integration fee (~$300); these figures come from third-party
+  summaries and are NOT reconciled against the official pricing page. Sandbox
+  keys are for testing only; going live requires a paid plan and a live app.
+sources:
+- https://signeasy.com/api/pricing
+- https://signeasy.com/api
+- https://docs.signeasy.com/docs/generate-live-api-key
+- https://docs.signeasy.com/docs/faq
+plans:
+- id: signeasy-starter
+  name: Starter (Free Sandbox)
+  type: free
+  description: >-
+    Free sandbox tier with complete API access for evaluation. Sandbox keys are
+    restricted to testing and cannot be used in production. Includes dedicated
+    onboarding support.
+  entries:
+  - label: Included Signature Requests
+    name: starter_signatures
+    type: usage
+    metric: envelopes
+    limit: 100
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free (sandbox / testing only)
+    userMultiplied: false
+  elements:
+  - name: Full API Access (Sandbox)
+  - name: Up to 3 Apps
+  - name: Onboarding Support
+- id: signeasy-intermediate
+  name: Intermediate
+  type: paid
+  description: >-
+    Popular paid tier for growing integrations. Adds template creation, embedded
+    signing and sending, webhooks, reference text field placement, and 24/7 email
+    support.
+  entries:
+  - label: Monthly Price
+    name: intermediate_price
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $125/month (or $1,499/year)
+    userMultiplied: false
+  - label: Included Signature Requests
+    name: intermediate_signatures
+    type: usage
+    metric: envelopes
+    limit: 1000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included in plan
+    userMultiplied: false
+  elements:
+  - name: Up to 10 Apps
+  - name: Template Creation
+  - name: Embedded Signing and Sending
+  - name: Webhooks
+  - name: 24/7 Email Support
+- id: signeasy-advanced
+  name: Advanced
+  type: paid
+  description: >-
+    Higher-volume paid tier adding embedded template creation, a dedicated
+    success manager, custom stamps, multi-factor authentication, branded emails,
+    and usage reports.
+  entries:
+  - label: Monthly Price
+    name: advanced_price
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $250/month (or $2,999/year)
+    userMultiplied: false
+  - label: Included Signature Requests
+    name: advanced_signatures
+    type: usage
+    metric: envelopes
+    limit: 2000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included in plan
+    userMultiplied: false
+  elements:
+  - name: Up to 10 Apps
+  - name: Embedded Template Creation
+  - name: Dedicated Success Manager
+  - name: Custom Stamps
+  - name: Multi-Factor Authentication
+  - name: Branded Emails
+- id: signeasy-enterprise
+  name: Build Your Plan (Enterprise)
+  type: enterprise
+  description: >-
+    Custom tier for high-transaction and specialized needs, with volume
+    discounts, higher API limits, custom solutions, and detailed API logs.
+    Contact Signeasy for a quote.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: custom quote (contact sales)
+    userMultiplied: false
+  elements:
+  - name: Custom Signature Volume
+  - name: Volume Discounts
+  - name: Higher API Limits
+  - name: Detailed API Logs
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,100 @@
+aid: signeasy
+name: Signeasy
+review:
+  question: Does Signeasy expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-03'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Signeasy's public developer surface is the
+    Signeasy API v3, a request/response REST API over HTTPS (base
+    https://api.signeasy.com/v3). Its only asynchronous, server-push mechanism is
+    outbound webhooks: Signeasy POSTs signature-lifecycle events to a receiver URL
+    that the developer configures in the developer portal. Webhooks are
+    server-to-endpoint HTTP callbacks, not a WebSocket or SSE stream, and the
+    webhook subscription is configured through the portal UI rather than a
+    documented public API surface, so there is no server-push transport on
+    Signeasy's own API to model as AsyncAPI.
+findings:
+  summary: |
+    Signeasy does not publish a documented public WebSocket API. Signeasy is an
+    eSignature and contract management platform. Its developer API (v3) is a REST
+    API served from https://api.signeasy.com/v3 and authenticated with OAuth 2.0
+    Bearer access tokens (sandbox and live; client-credentials and
+    authorization-code flows). Endpoints cover envelopes (signature requests),
+    original document uploads, templates, embedded signing/sending URLs, and the
+    authenticated user. Real-time status delivery is handled by outbound webhooks
+    that POST event payloads to a developer-configured URL. No realtime,
+    bidirectional, or streaming WebSocket (ws:// or wss://) endpoint is documented
+    anywhere in Signeasy's API reference, guides, or changelog as of the review
+    date.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.signeasy.com/v3
+      documented: true
+      note: Signeasy API v3. Request/response REST, OAuth 2.0 Bearer tokens (sandbox and live).
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: >-
+        Outbound HTTP callbacks POSTing signature-lifecycle events (rs.initiated,
+        rs.link_sent, rs.viewed, rs.signed, rs.completed, rs.declined, rs.reminded,
+        rs.expired, rs.voided, document.signed) to a developer-configured URL.
+        Configured in the developer portal; server-to-endpoint HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in Signeasy's API reference, guides, or changelog as of the review date.
+  endpointsConfirmedRest:
+    - POST   https://api.signeasy.com/v3/rs/envelope/
+    - POST   https://api.signeasy.com/v3/rs/envelope/{pending_file_id}/cancel
+    - POST   https://api.signeasy.com/v3/rs/{rs_id}/cancel
+    - GET    https://api.signeasy.com/v3/rs/envelope/signed/{signed_id}/{source_id}/download
+    - POST   https://api.signeasy.com/v3/original/
+    - PUT    https://api.signeasy.com/v3/template/{template_id}
+    - POST   https://api.signeasy.com/v3/template/{template_id}/embed
+    - POST   https://api.signeasy.com/v3/rs/embedded/url/
+    - POST   https://api.signeasy.com/v3/rs/embedded/{pending_file_id}/cancel/
+    - GET    https://api.signeasy.com/v3/me/
+  endpointsModeled:
+    - GET    https://api.signeasy.com/v3/rs/envelope/{pending_file_id}
+    - POST   https://api.signeasy.com/v3/rs/embedded/signing_url/
+  endpointsModeledNote: |
+    The two modeled endpoints (retrieve the envelope object, and generate a
+    per-recipient embedded signing URL) are described in the envelope object
+    documentation and the embedded signing guide, but the public API reference at
+    docs.signeasy.com does not embed a machine-readable OpenAPI fragment for their
+    exact path/method, so they are marked x-modeled: true in the OpenAPI and
+    labeled "(modeled)" in the collections. Verify exact paths in the developer
+    portal. All ten confirmed endpoints above were extracted from OpenAPI 3.1.0
+    fragments embedded in the public reference pages.
+sources:
+  - url: https://docs.signeasy.com/
+    type: Documentation
+    note: Signeasy API docs home; describes an eSignature REST API.
+  - url: https://docs.signeasy.com/reference/introduction-to-signeasy-apis
+    type: APIReference
+    note: v3, OAuth 2.0 authentication; all endpoints are HTTPS REST.
+  - url: https://docs.signeasy.com/llms.txt
+    type: Documentation
+    note: Machine-readable index of guides and API reference pages; each reference page embeds an OpenAPI 3.1.0 fragment with base URL https://api.signeasy.com/v3.
+  - url: https://docs.signeasy.com/docs/embedded-signing
+    type: Documentation
+    note: Embedded signing via iframe/pop-up using generated signing URLs; notifications via webhooks or redirect_url. No WebSocket.
+  - url: https://docs.signeasy.com/docs/webhooks
+    type: Documentation
+    note: Outbound webhooks POST event payloads to a configured URL with retry/backoff. Server-to-endpoint HTTP, not WebSocket.
+  - url: https://github.com/signeasy/api-samples
+    type: SourceCode
+    note: Official Python/Java/Node.js samples calling the REST API; no WebSocket client.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Signeasy's own public API is
+    request/response REST (Signeasy API v3), with asynchronous delivery handled by
+    outbound webhooks configured in the developer portal. No AsyncAPI document was
+    created because there is no documented server-push streaming transport
+    (WebSocket or SSE) on Signeasy's API to model.

@@ -1,0 +1,74 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Signeasy
+providerId: signeasy
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- eSignature
+- Documents
+- Rate Limiting
+- Quotas
+description: >-
+  Signeasy does not publish fixed numeric per-second or per-minute request-rate
+  limits for the v3 API. Consumption is governed primarily by plan volume - the
+  number of legally binding eSignature requests (envelopes) included per month -
+  and by a Fair Usage policy for high-volume users. Documented hard constraints
+  are structural: a maximum of 45 signers per signature request, a maximum
+  document size of 40 MB, and a maximum number of apps per plan (3 on the free
+  Starter tier, 10 on Intermediate/Advanced). Webhook delivery has its own
+  retry/backoff behavior on the receiver side.
+notes: >-
+  Numeric API request-rate limits are not documented as of the review date.
+  Verify current Fair Usage thresholds, any per-endpoint throttling, and overage
+  behavior with Signeasy during reconciliation. Third-party summaries mention
+  overage above ~10,000 envelopes/month; treat as unconfirmed.
+sources:
+- https://signeasy.com/api/pricing
+- https://docs.signeasy.com/docs/faq
+- https://docs.signeasy.com/docs/webhooks
+- https://docs.signeasy.com/reference/introduction-to-signeasy-apis
+responseCodes:
+  throttled: 429
+limits:
+- name: API Request Rate
+  scope: account
+  metric: requests
+  limit: not published
+  notes: No fixed numeric request-rate limit is documented for the v3 API.
+- name: Monthly Signature Requests (Envelopes)
+  scope: account
+  metric: envelopes
+  limit: per plan (100 Starter / 1,000 Intermediate / 2,000 Advanced / custom Enterprise)
+  notes: An envelope counts as one signature request regardless of document, field, or signer count.
+- name: Signers per Signature Request
+  scope: request
+  metric: recipients
+  limit: 45
+  notes: Maximum number of recipients (signers) on a single envelope.
+- name: Document Size
+  scope: request
+  metric: bytes
+  limit: 41943040
+  notes: Maximum 40 MB per document.
+- name: Applications per Account
+  scope: account
+  metric: apps
+  limit: 3 (Starter) / 10 (Intermediate and Advanced) / custom (Enterprise)
+  notes: Number of OAuth applications you can create on a plan.
+policies:
+- name: Fair Usage
+  description: A Fair Usage policy applies restrictions to high-volume users beyond plan allowances.
+- name: Webhook Retry
+  description: >-
+    Webhook events are processed asynchronously (order not guaranteed). Any 3xx,
+    4xx, or 5xx response from the receiver is a failure; Signeasy retries with
+    exponential backoff for 24 hours, then disables the webhook with an email
+    alert until it is fixed and re-enabled.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

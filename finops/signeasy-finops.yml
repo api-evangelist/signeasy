@@ -1,0 +1,97 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Signeasy
+providerId: signeasy
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- eSignature
+- Documents
+- Contract Management
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Signeasy API spend. Signeasy is billed as a tiered subscription
+  metered primarily on legally binding eSignature requests (envelopes) per month:
+  a free Starter/sandbox tier for evaluation, paid Intermediate ($125/mo) and
+  Advanced ($250/mo) tiers with escalating envelope allowances and features, and
+  a custom Enterprise tier for high volume. The dominant cost driver is envelope
+  volume; secondary considerations are app count limits per tier and any Fair
+  Usage / overage charges above the plan allowance.
+notes: >-
+  Reported overage (~$0.10 per envelope above ~10,000/month) and a custom API
+  access fee (~$300/year per integration) come from third-party summaries and
+  are NOT reconciled against the official pricing page. Verify all rates and
+  overage terms with Signeasy during reconciliation.
+sources:
+- https://signeasy.com/api/pricing
+- https://signeasy.com/api
+- https://docs.signeasy.com/docs/faq
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Signeasy
+serviceCategory: Business Applications and eSignature
+billingModel:
+  pricingCategory: Subscription-Based
+  billingFrequency: Monthly or Annual
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+  - Adjustment
+focusColumns:
+  ServiceName: Signeasy eSignature API
+  ServiceCategory: Business Applications and eSignature
+  ProviderName: Signeasy
+  PublisherName: Signeasy
+  InvoiceIssuerName: Signeasy
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription-Based
+meters:
+- name: envelopes
+  description: Legally binding eSignature requests sent per month; the primary billing metric. One envelope = one request regardless of documents, fields, or signers.
+  unit: envelopes
+  aggregation: sum
+  dimensions:
+  - account
+  - app
+- name: subscription
+  description: Recurring tier subscription fee (Intermediate, Advanced) billed monthly or annually.
+  unit: months
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+- name: overage_envelopes
+  description: Envelopes sent above the plan allowance / Fair Usage threshold (rate unconfirmed).
+  unit: envelopes
+  aggregation: sum
+  dimensions:
+  - account
+- name: apps
+  description: Number of OAuth applications provisioned (capped per tier).
+  unit: apps
+  aggregation: max
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track envelope volume per app and account against the plan allowance; use the Fetch User envelope_credits value and detailed API logs (Enterprise) to monitor consumption.
+- name: Allocation
+  description: Provision one OAuth app per workload/team so envelope usage maps to internal cost centers within the plan app limit.
+- name: Optimization
+  description: Right-size the tier to actual monthly envelope volume, consolidate multiple documents into a single envelope (one request), and use templates to reduce rework; avoid overage by upgrading before exceeding the allowance.
+- name: Accountability
+  description: Assign owners per app; review monthly envelope volume against the plan allowance and the annual-vs-monthly billing tradeoff.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
