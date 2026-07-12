@@ -162,6 +162,12 @@ apis:
     information and remaining envelope credits used to gauge available signature
     request volume.
 common:
+- type: TrustCenter
+  url: security/signeasy-trust-center.yml
+- type: DomainSecurity
+  url: security/signeasy-domain-security.yml
+- type: Authentication
+  url: authentication/signeasy-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/signeasy
 - type: LinkedIn
@@ -176,6 +182,8 @@ common:
   url: rate-limits/signeasy-rate-limits.yml
 - type: FinOps
   url: finops/signeasy-finops.yml
+- url: https://signeasy.com/blog/
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

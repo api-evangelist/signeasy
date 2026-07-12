@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/signeasy-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: OAuth 2.0 access token (sandbox or live) passed as a Bearer token in the Authorization
+    header.
+  sources:
+  - openapi/signeasy-openapi.yml
