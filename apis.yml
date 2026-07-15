@@ -162,6 +162,8 @@ apis:
     information and remaining envelope credits used to gauge available signature
     request volume.
 common:
+- type: AgenticAccess
+  url: agentic-access/signeasy-agentic-access.yml
 - type: TrustCenter
   url: security/signeasy-trust-center.yml
 - type: DomainSecurity
