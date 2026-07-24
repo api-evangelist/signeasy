@@ -1,0 +1,77 @@
+openapi: 3.1.0
+info:
+  title: Signeasy Embedded Templates API
+  version: '3.0'
+  description: 'RESTful eSignature API (v3) for the Signeasy contract and signature platform. Send documents for signature (envelopes), embed signing and sending inside your own app via iframes, manage reusable templates with merge fields, upload original documents, fetch the authenticated user, and receive signature lifecycle events via webhooks.
+
+
+    Confirmed endpoints (paths and methods) were extracted from the OpenAPI fragments embedded in the public Signeasy API reference at docs.signeasy.com. A small number of endpoints (marked with x-modeled: true) are modeled from the guides and the envelope object documentation where the public reference does not embed a machine-readable definition; verify these against the developer portal.
+
+
+    All requests use the base URL https://api.signeasy.com/v3 and are authenticated with an OAuth 2.0 Bearer access token (sandbox or live).'
+  contact:
+    name: Signeasy API Support
+    url: https://docs.signeasy.com/support
+  license:
+    name: Proprietary
+    url: https://signeasy.com/terms-of-service
+servers:
+- url: https://api.signeasy.com/v3
+  description: Signeasy API v3 (sandbox and live tokens use the same host)
+security:
+- bearerAuth: []
+tags:
+- name: Templates
+  description: Reusable documents with predefined roles and merge fields.
+paths:
+  /template/{template_id}:
+    put:
+      operationId: updateTemplate
+      tags:
+      - Templates
+      summary: Update template
+      parameters:
+      - name: template_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Template updated.
+  /template/{template_id}/embed:
+    post:
+      operationId: fetchEmbeddedTemplateCreateUrl
+      tags:
+      - Templates
+      summary: Fetch embedded template create URL
+      description: Get the embedded template-creation link for a template. Load this URL in an iframe so users can create or update templates inside your own app.
+      parameters:
+      - name: template_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Embedded template URL.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    format: uri
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 access token (sandbox or live) passed as a Bearer token in the Authorization header.

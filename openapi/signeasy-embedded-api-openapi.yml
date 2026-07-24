@@ -1,0 +1,105 @@
+openapi: 3.1.0
+info:
+  title: Signeasy Embedded API
+  version: '3.0'
+  description: 'RESTful eSignature API (v3) for the Signeasy contract and signature platform. Send documents for signature (envelopes), embed signing and sending inside your own app via iframes, manage reusable templates with merge fields, upload original documents, fetch the authenticated user, and receive signature lifecycle events via webhooks.
+
+
+    Confirmed endpoints (paths and methods) were extracted from the OpenAPI fragments embedded in the public Signeasy API reference at docs.signeasy.com. A small number of endpoints (marked with x-modeled: true) are modeled from the guides and the envelope object documentation where the public reference does not embed a machine-readable definition; verify these against the developer portal.
+
+
+    All requests use the base URL https://api.signeasy.com/v3 and are authenticated with an OAuth 2.0 Bearer access token (sandbox or live).'
+  contact:
+    name: Signeasy API Support
+    url: https://docs.signeasy.com/support
+  license:
+    name: Proprietary
+    url: https://signeasy.com/terms-of-service
+servers:
+- url: https://api.signeasy.com/v3
+  description: Signeasy API v3 (sandbox and live tokens use the same host)
+security:
+- bearerAuth: []
+tags:
+- name: Embedded
+  description: Embedded signing and sending flows for iframes and pop-ups.
+paths:
+  /rs/embedded/url/:
+    post:
+      operationId: fetchEmbeddedSendingUrl
+      tags:
+      - Embedded
+      summary: Fetch embedded sending URL
+      description: Return a URL that lets a user prepare and send a document for signature from within your own app in an iframe or pop-up.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Embedded sending URL.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    format: uri
+  /rs/embedded/{pending_file_id}/cancel/:
+    post:
+      operationId: cancelEmbeddedSignatureRequest
+      tags:
+      - Embedded
+      summary: Cancel an embedded signature request
+      parameters:
+      - name: pending_file_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Embedded signature request canceled.
+  /rs/embedded/signing_url/:
+    post:
+      operationId: fetchEmbeddedSigningUrl
+      x-modeled: true
+      tags:
+      - Embedded
+      summary: Fetch embedded signing URL for a recipient
+      description: Generate a per-recipient signing URL for an embedded signature request, to be loaded in an iframe or pop-up. An optional redirect_url returns control to your app (with the pending_file_id) after signing. Path modeled from the embedded signing guide; verify exact path in the developer portal.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pending_file_id:
+                  type: integer
+                email:
+                  type: string
+                  format: email
+                redirect_url:
+                  type: string
+                  format: uri
+      responses:
+        '200':
+          description: Signing URL for the recipient.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    format: uri
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 access token (sandbox or live) passed as a Bearer token in the Authorization header.

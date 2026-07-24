@@ -1,0 +1,62 @@
+openapi: 3.1.0
+info:
+  title: Signeasy Embedded Users API
+  version: '3.0'
+  description: 'RESTful eSignature API (v3) for the Signeasy contract and signature platform. Send documents for signature (envelopes), embed signing and sending inside your own app via iframes, manage reusable templates with merge fields, upload original documents, fetch the authenticated user, and receive signature lifecycle events via webhooks.
+
+
+    Confirmed endpoints (paths and methods) were extracted from the OpenAPI fragments embedded in the public Signeasy API reference at docs.signeasy.com. A small number of endpoints (marked with x-modeled: true) are modeled from the guides and the envelope object documentation where the public reference does not embed a machine-readable definition; verify these against the developer portal.
+
+
+    All requests use the base URL https://api.signeasy.com/v3 and are authenticated with an OAuth 2.0 Bearer access token (sandbox or live).'
+  contact:
+    name: Signeasy API Support
+    url: https://docs.signeasy.com/support
+  license:
+    name: Proprietary
+    url: https://signeasy.com/terms-of-service
+servers:
+- url: https://api.signeasy.com/v3
+  description: Signeasy API v3 (sandbox and live tokens use the same host)
+security:
+- bearerAuth: []
+tags:
+- name: Users
+  description: Authenticated account details and envelope credits.
+paths:
+  /me/:
+    get:
+      operationId: fetchUser
+      tags:
+      - Users
+      summary: Fetch user
+      description: Fetch the authenticated user's details, including remaining envelope credits.
+      responses:
+        '200':
+          description: The user object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Missing or invalid access token.
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        envelope_credits:
+          type: integer
+          description: Remaining envelope credits on the account.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 access token (sandbox or live) passed as a Bearer token in the Authorization header.
