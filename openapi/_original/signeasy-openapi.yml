@@ -1,0 +1,400 @@
+openapi: 3.1.0
+info:
+  title: Signeasy API
+  version: '3.0'
+  description: >-
+    RESTful eSignature API (v3) for the Signeasy contract and signature platform.
+    Send documents for signature (envelopes), embed signing and sending inside your
+    own app via iframes, manage reusable templates with merge fields, upload original
+    documents, fetch the authenticated user, and receive signature lifecycle events
+    via webhooks.
+
+
+    Confirmed endpoints (paths and methods) were extracted from the OpenAPI
+    fragments embedded in the public Signeasy API reference at docs.signeasy.com.
+    A small number of endpoints (marked with x-modeled: true) are modeled from the
+    guides and the envelope object documentation where the public reference does not
+    embed a machine-readable definition; verify these against the developer portal.
+
+
+    All requests use the base URL https://api.signeasy.com/v3 and are authenticated
+    with an OAuth 2.0 Bearer access token (sandbox or live).
+  contact:
+    name: Signeasy API Support
+    url: https://docs.signeasy.com/support
+  license:
+    name: Proprietary
+    url: https://signeasy.com/terms-of-service
+servers:
+- url: https://api.signeasy.com/v3
+  description: Signeasy API v3 (sandbox and live tokens use the same host)
+security:
+- bearerAuth: []
+tags:
+- name: Envelopes
+  description: Signature requests composed of originals and templates.
+- name: Originals
+  description: Master documents used to build signature requests.
+- name: Templates
+  description: Reusable documents with predefined roles and merge fields.
+- name: Embedded
+  description: Embedded signing and sending flows for iframes and pop-ups.
+- name: Users
+  description: Authenticated account details and envelope credits.
+paths:
+  /rs/envelope/:
+    post:
+      operationId: createEnvelope
+      tags:
+      - Envelopes
+      summary: Create or send an envelope
+      description: >-
+        Send a signature request containing one or more original documents and/or
+        templates to up to 45 recipients. Set embedded_signing to true to create an
+        embedded request (no emails sent by Signeasy) and generate signing URLs
+        yourself.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                originals:
+                  type: array
+                  description: Original document IDs to include in the envelope.
+                  items:
+                    type: object
+                templates:
+                  type: array
+                  description: Template IDs to include in the envelope.
+                  items:
+                    type: object
+                recipients:
+                  type: array
+                  description: Recipients (signers) of the envelope, up to 45.
+                  items:
+                    type: object
+                embedded_signing:
+                  type: boolean
+                  description: When true, creates an embedded signature request; Signeasy sends no recipient emails.
+                message:
+                  type: string
+                expiry:
+                  type: integer
+                  description: Days until the signature request expires.
+      responses:
+        '200':
+          description: Envelope created. Returns the pending file (envelope) id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+        '401':
+          description: Missing or invalid access token.
+  /rs/envelope/{pending_file_id}:
+    get:
+      operationId: getEnvelope
+      x-modeled: true
+      tags:
+      - Envelopes
+      summary: Retrieve the envelope object
+      description: >-
+        Fetch a signature request (pending file / envelope) and its status. Status is
+        one of incomplete, complete, recipient_declined, or canceled; each recipient
+        carries a status of viewed, not_viewed, declined, or finalized. Path modeled
+        from the envelope object documentation.
+      parameters:
+      - name: pending_file_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: The pending file (envelope) id returned when the envelope was created.
+      responses:
+        '200':
+          description: The envelope object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+        '404':
+          description: Envelope not found.
+  /rs/envelope/{pending_file_id}/cancel:
+    post:
+      operationId: cancelEnvelope
+      tags:
+      - Envelopes
+      summary: Cancel (void) an envelope signature request
+      parameters:
+      - name: pending_file_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Signature request canceled.
+        '404':
+          description: Envelope not found.
+  /rs/{rs_id}/cancel:
+    post:
+      operationId: cancelSignatureRequest
+      tags:
+      - Envelopes
+      summary: Cancel a signature request
+      description: Cancel a signature request by its request id (legacy single-document flow).
+      parameters:
+      - name: rs_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Signature request canceled.
+  /rs/envelope/signed/{signed_id}/{source_id}/download:
+    get:
+      operationId: downloadSignedFile
+      tags:
+      - Envelopes
+      summary: Download a signed file within an envelope as PDF
+      parameters:
+      - name: signed_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: source_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: The signed document as a PDF.
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+  /original/:
+    post:
+      operationId: uploadOriginal
+      tags:
+      - Originals
+      summary: Upload an original
+      description: Upload a master document (up to 40 MB) that can be used to send signature requests.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Original uploaded. Returns the original document id.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+  /template/{template_id}:
+    put:
+      operationId: updateTemplate
+      tags:
+      - Templates
+      summary: Update template
+      parameters:
+      - name: template_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Template updated.
+  /template/{template_id}/embed:
+    post:
+      operationId: fetchEmbeddedTemplateCreateUrl
+      tags:
+      - Templates
+      summary: Fetch embedded template create URL
+      description: >-
+        Get the embedded template-creation link for a template. Load this URL in an
+        iframe so users can create or update templates inside your own app.
+      parameters:
+      - name: template_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Embedded template URL.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    format: uri
+  /rs/embedded/url/:
+    post:
+      operationId: fetchEmbeddedSendingUrl
+      tags:
+      - Embedded
+      summary: Fetch embedded sending URL
+      description: >-
+        Return a URL that lets a user prepare and send a document for signature from
+        within your own app in an iframe or pop-up.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Embedded sending URL.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    format: uri
+  /rs/embedded/{pending_file_id}/cancel/:
+    post:
+      operationId: cancelEmbeddedSignatureRequest
+      tags:
+      - Embedded
+      summary: Cancel an embedded signature request
+      parameters:
+      - name: pending_file_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Embedded signature request canceled.
+  /rs/embedded/signing_url/:
+    post:
+      operationId: fetchEmbeddedSigningUrl
+      x-modeled: true
+      tags:
+      - Embedded
+      summary: Fetch embedded signing URL for a recipient
+      description: >-
+        Generate a per-recipient signing URL for an embedded signature request, to be
+        loaded in an iframe or pop-up. An optional redirect_url returns control to your
+        app (with the pending_file_id) after signing. Path modeled from the embedded
+        signing guide; verify exact path in the developer portal.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pending_file_id:
+                  type: integer
+                email:
+                  type: string
+                  format: email
+                redirect_url:
+                  type: string
+                  format: uri
+      responses:
+        '200':
+          description: Signing URL for the recipient.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    format: uri
+  /me/:
+    get:
+      operationId: fetchUser
+      tags:
+      - Users
+      summary: Fetch user
+      description: Fetch the authenticated user's details, including remaining envelope credits.
+      responses:
+        '200':
+          description: The user object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Missing or invalid access token.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 access token (sandbox or live) passed as a Bearer token in the Authorization header.
+  schemas:
+    Envelope:
+      type: object
+      description: A signature request (pending file) composed of one or more documents sent to up to 45 signers.
+      properties:
+        id:
+          type: integer
+          description: The pending file id of the signature request.
+        status:
+          type: string
+          enum:
+          - incomplete
+          - complete
+          - recipient_declined
+          - canceled
+        recipients:
+          type: array
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+              status:
+                type: string
+                enum:
+                - viewed
+                - not_viewed
+                - declined
+                - finalized
+        request_info:
+          type: object
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        envelope_credits:
+          type: integer
+          description: Remaining envelope credits on the account.

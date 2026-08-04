@@ -1,0 +1,22 @@
+{
+  "provider": "signeasy",
+  "sources": [
+    "signeasy-embedded-api-openapi.yml",
+    "signeasy-envelopes-api-openapi.yml",
+    "signeasy-originals-api-openapi.yml",
+    "signeasy-templates-api-openapi.yml",
+    "signeasy-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "signeasy-embedded-api-openapi.yml",
+    "signeasy-envelopes-api-openapi.yml",
+    "signeasy-originals-api-openapi.yml",
+    "signeasy-templates-api-openapi.yml",
+    "signeasy-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
