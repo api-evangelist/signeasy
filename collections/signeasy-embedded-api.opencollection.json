@@ -1,0 +1,72 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Signeasy Embedded API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Embedded",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch embedded sending URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/rs/embedded/url/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return a URL that lets a user prepare and send a document for signature from within your own app in an iframe or pop-up."
+        },
+        {
+          "info": {
+            "name": "Cancel an embedded signature request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/rs/embedded/:pending_file_id/cancel/",
+            "params": [
+              {
+                "name": "pending_file_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel an embedded signature request"
+        },
+        {
+          "info": {
+            "name": "Fetch embedded signing URL for a recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/rs/embedded/signing_url/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate a per-recipient signing URL for an embedded signature request, to be loaded in an iframe or pop-up. An optional redirect_url returns control to your app (with the pending_file_id) after signing. Path modeled from the embedded signing guide; verify exact path in the developer portal."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

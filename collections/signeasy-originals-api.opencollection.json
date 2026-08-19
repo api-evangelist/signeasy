@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Signeasy Embedded Originals API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Originals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload an original",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/original/",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload a master document (up to 40 MB) that can be used to send signature requests."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

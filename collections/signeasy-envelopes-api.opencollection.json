@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Signeasy Embedded Envelopes API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Envelopes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create or send an envelope",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/rs/envelope/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a signature request containing one or more original documents and/or templates to up to 45 recipients. Set embedded_signing to true to create an embedded request (no emails sent by Signeasy) and generate signing URLs yourself."
+        },
+        {
+          "info": {
+            "name": "Retrieve the envelope object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.signeasy.com/v3/rs/envelope/:pending_file_id",
+            "params": [
+              {
+                "name": "pending_file_id",
+                "value": "",
+                "type": "path",
+                "description": "The pending file (envelope) id returned when the envelope was created."
+              }
+            ]
+          },
+          "docs": "Fetch a signature request (pending file / envelope) and its status. Status is one of incomplete, complete, recipient_declined, or canceled; each recipient carries a status of viewed, not_viewed, declined, or finalized. Path modeled from the envelope object documentation."
+        },
+        {
+          "info": {
+            "name": "Cancel (void) an envelope signature request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/rs/envelope/:pending_file_id/cancel",
+            "params": [
+              {
+                "name": "pending_file_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel (void) an envelope signature request"
+        },
+        {
+          "info": {
+            "name": "Cancel a signature request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/rs/:rs_id/cancel",
+            "params": [
+              {
+                "name": "rs_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel a signature request by its request id (legacy single-document flow)."
+        },
+        {
+          "info": {
+            "name": "Download a signed file within an envelope as PDF",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.signeasy.com/v3/rs/envelope/signed/:signed_id/:source_id/download",
+            "params": [
+              {
+                "name": "signed_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "source_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download a signed file within an envelope as PDF"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

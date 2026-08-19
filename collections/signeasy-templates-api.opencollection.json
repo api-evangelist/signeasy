@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Signeasy Embedded Templates API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.signeasy.com/v3/template/:template_id",
+            "params": [
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update template"
+        },
+        {
+          "info": {
+            "name": "Fetch embedded template create URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.signeasy.com/v3/template/:template_id/embed",
+            "params": [
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the embedded template-creation link for a template. Load this URL in an iframe so users can create or update templates inside your own app."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

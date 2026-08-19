@@ -1,0 +1,148 @@
+{
+  "item": [
+    {
+      "id": "d0caa1f4-533b-4794-a34b-88b51e32c187",
+      "name": "Originals",
+      "description": {
+        "content": "Master documents used to build signature requests.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a6b185af-9d3b-4d9c-b2a5-fccb2efcd16a",
+          "name": "Upload an original",
+          "request": {
+            "name": "Upload an original",
+            "description": {
+              "content": "Upload a master document (up to 40 MB) that can be used to send signature requests.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "original",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "55f884c4-5944-4f21-bba1-591f191239e9",
+              "name": "Original uploaded. Returns the original document id.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "original",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 167\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.signeasy.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9ed76e4a-ba0c-45ba-bdb5-e71c9f646bb1",
+    "name": "Signeasy Embedded Originals API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful eSignature API (v3) for the Signeasy contract and signature platform. Send documents for signature (envelopes), embed signing and sending inside your own app via iframes, manage reusable templates with merge fields, upload original documents, fetch the authenticated user, and receive signature lifecycle events via webhooks.\n\nConfirmed endpoints (paths and methods) were extracted from the OpenAPI fragments embedded in the public Signeasy API reference at docs.signeasy.com. A small number of endpoints (marked with x-modeled: true) are modeled from the guides and the envelope object documentation where the public reference does not embed a machine-readable definition; verify these against the developer portal.\n\nAll requests use the base URL https://api.signeasy.com/v3 and are authenticated with an OAuth 2.0 Bearer access token (sandbox or live).\n\nContact Support:\n Name: Signeasy API Support",
+      "type": "text/plain"
+    }
+  }
+}

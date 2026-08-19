@@ -1,0 +1,340 @@
+{
+  "item": [
+    {
+      "id": "5b0a7bbe-bda1-4121-b4e9-e9812ca1e2d0",
+      "name": "Embedded",
+      "description": {
+        "content": "Embedded signing and sending flows for iframes and pop-ups.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ef2da2c9-5c18-481c-8352-1b2c6b91433c",
+          "name": "Fetch embedded sending URL",
+          "request": {
+            "name": "Fetch embedded sending URL",
+            "description": {
+              "content": "Return a URL that lets a user prepare and send a document for signature from within your own app in an iframe or pop-up.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rs",
+                "embedded",
+                "url",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e015fe5c-d06f-48db-9d0f-0314dd9f874b",
+              "name": "Embedded sending URL.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rs",
+                    "embedded",
+                    "url",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"url\": \"http://oNiywBVvaoxgQKqJdStQ.ivxnbe7j8lAXalMgg4deHxkMh57K50,Krdlvco.tLo,RLZmBWLP.5\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eaf5e062-8f89-4766-8c8f-3f6e5bee8f6d",
+          "name": "Cancel an embedded signature request",
+          "request": {
+            "name": "Cancel an embedded signature request",
+            "description": {},
+            "url": {
+              "path": [
+                "rs",
+                "embedded",
+                ":pending_file_id",
+                "cancel",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pending_file_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6b1a2cd4-ca21-43e1-bfde-91ae227e7950",
+              "name": "Embedded signature request canceled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rs",
+                    "embedded",
+                    ":pending_file_id",
+                    "cancel",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pending_file_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aa669ef6-051b-4deb-9bb8-4ba788f09089",
+          "name": "Fetch embedded signing URL for a recipient",
+          "request": {
+            "name": "Fetch embedded signing URL for a recipient",
+            "description": {
+              "content": "Generate a per-recipient signing URL for an embedded signature request, to be loaded in an iframe or pop-up. An optional redirect_url returns control to your app (with the pending_file_id) after signing. Path modeled from the embedded signing guide; verify exact path in the developer portal.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rs",
+                "embedded",
+                "signing_url",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pending_file_id\": \"<integer>\",\n  \"email\": \"<email>\",\n  \"redirect_url\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "68003bbb-9618-4b97-8d7d-b267686ec8d6",
+              "name": "Signing URL for the recipient.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rs",
+                    "embedded",
+                    "signing_url",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pending_file_id\": \"<integer>\",\n  \"email\": \"<email>\",\n  \"redirect_url\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"url\": \"http://oNiywBVvaoxgQKqJdStQ.ivxnbe7j8lAXalMgg4deHxkMh57K50,Krdlvco.tLo,RLZmBWLP.5\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.signeasy.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2fb81f89-ab65-49b3-867d-4de8da82b07a",
+    "name": "Signeasy Embedded API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful eSignature API (v3) for the Signeasy contract and signature platform. Send documents for signature (envelopes), embed signing and sending inside your own app via iframes, manage reusable templates with merge fields, upload original documents, fetch the authenticated user, and receive signature lifecycle events via webhooks.\n\nConfirmed endpoints (paths and methods) were extracted from the OpenAPI fragments embedded in the public Signeasy API reference at docs.signeasy.com. A small number of endpoints (marked with x-modeled: true) are modeled from the guides and the envelope object documentation where the public reference does not embed a machine-readable definition; verify these against the developer portal.\n\nAll requests use the base URL https://api.signeasy.com/v3 and are authenticated with an OAuth 2.0 Bearer access token (sandbox or live).\n\nContact Support:\n Name: Signeasy API Support",
+      "type": "text/plain"
+    }
+  }
+}

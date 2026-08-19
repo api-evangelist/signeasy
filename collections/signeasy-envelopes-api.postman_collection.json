@@ -1,0 +1,680 @@
+{
+  "item": [
+    {
+      "id": "71c78e40-be4a-4307-b3b6-236832efdce4",
+      "name": "Envelopes",
+      "description": {
+        "content": "Signature requests composed of originals and templates.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ade8acb8-5d44-4458-a5ab-08c18109f610",
+          "name": "Create or send an envelope",
+          "request": {
+            "name": "Create or send an envelope",
+            "description": {
+              "content": "Send a signature request containing one or more original documents and/or templates to up to 45 recipients. Set embedded_signing to true to create an embedded request (no emails sent by Signeasy) and generate signing URLs yourself.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rs",
+                "envelope",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"originals\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"templates\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"recipients\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"embedded_signing\": \"<boolean>\",\n  \"message\": \"<string>\",\n  \"expiry\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7ceee7a8-340e-4780-9fe8-b5713ac3aa74",
+              "name": "Envelope created. Returns the pending file (envelope) id.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rs",
+                    "envelope",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originals\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"templates\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"recipients\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"embedded_signing\": \"<boolean>\",\n  \"message\": \"<string>\",\n  \"expiry\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 8346,\n  \"status\": \"recipient_declined\",\n  \"recipients\": [\n    {\n      \"email\": \"CBf3S@VOSivkuPDmwsehfsxwNOhPNKJbPKwLG.yjwf\",\n      \"status\": \"declined\"\n    },\n    {\n      \"email\": \"QnSe@PkoN.vpj\",\n      \"status\": \"viewed\"\n    }\n  ],\n  \"request_info\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f603806-11b7-4c44-b124-64bc3cbc16a3",
+              "name": "Missing or invalid access token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rs",
+                    "envelope",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originals\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"templates\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"recipients\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"embedded_signing\": \"<boolean>\",\n  \"message\": \"<string>\",\n  \"expiry\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "04514c08-1018-4757-a307-1369d338711e",
+          "name": "Retrieve the envelope object",
+          "request": {
+            "name": "Retrieve the envelope object",
+            "description": {
+              "content": "Fetch a signature request (pending file / envelope) and its status. Status is one of incomplete, complete, recipient_declined, or canceled; each recipient carries a status of viewed, not_viewed, declined, or finalized. Path modeled from the envelope object documentation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rs",
+                "envelope",
+                ":pending_file_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pending_file_id",
+                  "description": "(Required) The pending file (envelope) id returned when the envelope was created."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8376372d-a461-468b-ac16-320869055372",
+              "name": "The envelope object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rs",
+                    "envelope",
+                    ":pending_file_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pending_file_id",
+                      "description": "(Required) The pending file (envelope) id returned when the envelope was created."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 8346,\n  \"status\": \"recipient_declined\",\n  \"recipients\": [\n    {\n      \"email\": \"CBf3S@VOSivkuPDmwsehfsxwNOhPNKJbPKwLG.yjwf\",\n      \"status\": \"declined\"\n    },\n    {\n      \"email\": \"QnSe@PkoN.vpj\",\n      \"status\": \"viewed\"\n    }\n  ],\n  \"request_info\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c13cb67-7164-41b1-baa4-b1dcf0847ca1",
+              "name": "Envelope not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rs",
+                    "envelope",
+                    ":pending_file_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pending_file_id",
+                      "description": "(Required) The pending file (envelope) id returned when the envelope was created."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0dcb929d-4ffd-4e48-8d86-5f7629fbab92",
+          "name": "Cancel (void) an envelope signature request",
+          "request": {
+            "name": "Cancel (void) an envelope signature request",
+            "description": {},
+            "url": {
+              "path": [
+                "rs",
+                "envelope",
+                ":pending_file_id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pending_file_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1e6878c7-cad5-438c-b493-681114b55bee",
+              "name": "Signature request canceled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rs",
+                    "envelope",
+                    ":pending_file_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pending_file_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6abe1a5b-a8c8-47d3-9ec8-90a3ce12bbf1",
+              "name": "Envelope not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rs",
+                    "envelope",
+                    ":pending_file_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pending_file_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "95078c2e-a7c6-4aae-8c72-643ec27ff668",
+          "name": "Cancel a signature request",
+          "request": {
+            "name": "Cancel a signature request",
+            "description": {
+              "content": "Cancel a signature request by its request id (legacy single-document flow).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rs",
+                ":rs_id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "rs_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d5083f98-f300-4969-894e-05977b1544d5",
+              "name": "Signature request canceled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rs",
+                    ":rs_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "rs_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4c68d989-f93f-4ca5-aa50-16e0910007e1",
+          "name": "Download a signed file within an envelope as PDF",
+          "request": {
+            "name": "Download a signed file within an envelope as PDF",
+            "description": {},
+            "url": {
+              "path": [
+                "rs",
+                "envelope",
+                "signed",
+                ":signed_id",
+                ":source_id",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "signed_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "source_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/pdf"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9bc4b4de-9416-4966-a271-3a17f5c39a36",
+              "name": "The signed document as a PDF.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rs",
+                    "envelope",
+                    "signed",
+                    ":signed_id",
+                    ":source_id",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "signed_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "source_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/pdf"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/pdf"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.signeasy.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "be1ba614-7bb0-479f-96f1-ec419feada5a",
+    "name": "Signeasy Embedded Envelopes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful eSignature API (v3) for the Signeasy contract and signature platform. Send documents for signature (envelopes), embed signing and sending inside your own app via iframes, manage reusable templates with merge fields, upload original documents, fetch the authenticated user, and receive signature lifecycle events via webhooks.\n\nConfirmed endpoints (paths and methods) were extracted from the OpenAPI fragments embedded in the public Signeasy API reference at docs.signeasy.com. A small number of endpoints (marked with x-modeled: true) are modeled from the guides and the envelope object documentation where the public reference does not embed a machine-readable definition; verify these against the developer portal.\n\nAll requests use the base URL https://api.signeasy.com/v3 and are authenticated with an OAuth 2.0 Bearer access token (sandbox or live).\n\nContact Support:\n Name: Signeasy API Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,245 @@
+{
+  "item": [
+    {
+      "id": "cbc8f286-145e-4130-9d53-2085c849e652",
+      "name": "Templates",
+      "description": {
+        "content": "Reusable documents with predefined roles and merge fields.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "991fb528-46b4-4662-97a7-5eca1ab53d9f",
+          "name": "Update template",
+          "request": {
+            "name": "Update template",
+            "description": {},
+            "url": {
+              "path": [
+                "template",
+                ":template_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "template_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e57ad958-6a2d-4d22-8c6e-b456a7c11420",
+              "name": "Template updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "template",
+                    ":template_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "template_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "645a4516-9d51-4ecd-9371-9086ddb2ec43",
+          "name": "Fetch embedded template create URL",
+          "request": {
+            "name": "Fetch embedded template create URL",
+            "description": {
+              "content": "Get the embedded template-creation link for a template. Load this URL in an iframe so users can create or update templates inside your own app.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "template",
+                ":template_id",
+                "embed"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "template_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "19a57cbc-4d93-4c5c-acd4-54a63c5dc751",
+              "name": "Embedded template URL.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "template",
+                    ":template_id",
+                    "embed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "template_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"url\": \"https://PfskfFpYQruhWwLXQMWBEK.hmDm3.-YMMaYhD\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.signeasy.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0117d4c1-0e52-41a1-9b74-b79b889be5a1",
+    "name": "Signeasy Embedded Templates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful eSignature API (v3) for the Signeasy contract and signature platform. Send documents for signature (envelopes), embed signing and sending inside your own app via iframes, manage reusable templates with merge fields, upload original documents, fetch the authenticated user, and receive signature lifecycle events via webhooks.\n\nConfirmed endpoints (paths and methods) were extracted from the OpenAPI fragments embedded in the public Signeasy API reference at docs.signeasy.com. A small number of endpoints (marked with x-modeled: true) are modeled from the guides and the envelope object documentation where the public reference does not embed a machine-readable definition; verify these against the developer portal.\n\nAll requests use the base URL https://api.signeasy.com/v3 and are authenticated with an OAuth 2.0 Bearer access token (sandbox or live).\n\nContact Support:\n Name: Signeasy API Support",
+      "type": "text/plain"
+    }
+  }
+}
