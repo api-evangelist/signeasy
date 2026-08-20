@@ -25,6 +25,14 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/signeasy.png
 tags:
+- E-Signature
+- Electronic Signature
+- Documents
+- Contract Management
+- Embedded Signing
+- Templates
+- Webhook
+tags_raw:
 - eSignature
 - Electronic Signature
 - Documents
@@ -186,6 +194,8 @@ apis:
   humanURL: https://docs.signeasy.com/reference/create-an-envelope-rs-originals-templates
   baseURL: https://api.signeasy.com/v3
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
