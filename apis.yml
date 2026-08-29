@@ -10,6 +10,18 @@ description: Signeasy is an eSignature and intelligent contract management platf
   upload original documents, and receive real-time signature lifecycle notifications
   through webhooks. All endpoints are served from https://api.signeasy.com/v3 and
   authenticated with OAuth 2.0 Bearer access tokens (sandbox and live).
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
