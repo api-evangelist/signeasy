@@ -1,11 +1,7 @@
 {
   "provider": "signeasy",
   "sources": [
-    "signeasy-embedded-api-openapi.yml",
-    "signeasy-envelopes-api-openapi.yml",
-    "signeasy-originals-api-openapi.yml",
-    "signeasy-templates-api-openapi.yml",
-    "signeasy-users-api-openapi.yml"
+    "_original/signeasy-openapi.yml"
   ],
   "outputs": [
     "signeasy-embedded-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "signeasy-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "signeasy-embedded-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "signeasy-envelopes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "signeasy-originals-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "signeasy-templates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "signeasy-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
