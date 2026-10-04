@@ -1,0 +1,26 @@
+slug: signeasy
+provider: Signeasy
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Envelopes
+  spec_file: signeasy-envelopes-api-openapi.yml
+  capability_id: BC-150.10
+  capability_id_l1: BC-150
+  capability_name: Contract Management
+  confidence: 0.7
+  evidence: POST /rs/envelope/ createEnvelope 'Create or send an envelope'; 'Cancel (void) an envelope
+    signature request'; vendor is an 'eSignature and intelligent contract management platform'
+  reason: Envelopes are the signature-request containers used to send documents for execution — the execution
+    stage of the contract lifecycle. Mapped to Contract Management rather than any technical capability;
+    confidence moderated because e-signature is only one step of contract lifecycle.

@@ -240,6 +240,9 @@ apis:
   - type: APIReference
     url: https://docs.signeasy.com/reference/fetch-user-details
 common:
+- type: CapabilityMap
+  url: capabilities/signeasy-capability-edges.yml
+  name: Signeasy Business Capability Map
 - type: AgenticAccess
   url: agentic-access/signeasy-agentic-access.yml
 - type: TrustCenter
