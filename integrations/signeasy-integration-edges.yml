@@ -1,0 +1,45 @@
+edges:
+- partner_name: Google Workspace (own)
+  partner: google-workspace
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://workspace.google.com/marketplace/app/signeasy_esignatures_for_google_workspac/484878786372
+  mirror_of: google-workspace/integrations/google-workspace-integration-edges.yml
+  apps:
+  - Signeasy eSignatures for Google Workspace™
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Google Workspace app
+- partner_name: Microsoft Teams (own)
+  partner: microsoft-teams
+  partner_match: mirror
+  mirror_match: domain+product
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://appsource.microsoft.com/en-us/product/office/WA104381623
+  mirror_of: microsoft-teams/integrations/microsoft-teams-integration-edges.yml
+  apps:
+  - Signeasy eSignature
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Microsoft Teams app
+  publisher_verified:
+  - Microsoft 365 Publisher Attestation
+generated: '2026-10-18'
+method: searched
+source:
+- google-workspace/integrations/google-workspace-integration-edges.yml
+- microsoft-teams/integrations/microsoft-teams-integration-edges.yml
+checked:
+- google-workspace/integrations/google-workspace-integration-edges.yml
+- microsoft-teams/integrations/microsoft-teams-integration-edges.yml
