@@ -39,7 +39,6 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/signeasy.png
 tags:
 - E-Signature
-- Electronic Signature
 - Documents
 - Contract Management
 - Embedded Signing
